@@ -240,11 +240,11 @@ input:required:focus {
                         <a class="add-button" onclick="addLogiciel()">+ Ajouter un logiciel</a>
                     </div>
             
-                    <div class="competence-category" id="competencesProfessionnellesFields">
-                        <label>Compétences Professionnelles
-                            <input type="text" name="competences_professionnelles[]" placeholder="Ex : Gestion de projet (intermédiaire)">
+                    <div class="competence-category" id="Domaines de CompétencesFields">
+                        <label>Domaines de Compétences 
+                            <input type="text" name="Domaines de Compétences[]" placeholder="Ex : Gestion de projet (intermédiaire)">
                         </label>
-                        <a class="add-button" onclick="addProfessionnelle()">+ Ajouter une compétence professionnelle</a>
+                        <a class="add-button" onclick="addProfessionnelle()">+ Ajouter un domaine de Compétence</a>
                     </div>
                 </div>
             </div>
@@ -253,42 +253,45 @@ input:required:focus {
             <div class="section">
                 <div class="section-title">EXPERIENCES PROFESSIONNELLES</div>
                 <div id="experienceFields">
-                    <label>Date de début et fin de contrat
-                        <input type="text" name="experience_dates[]" placeholder="Ex : 2020-2023">
-                    </label>
-                    <label>Intitulé du poste occupé
-                        <input type="text" name="experience_postes[]" placeholder="Ex : Agent commercial">
-                    </label>
-                    <label>Tâches effectuées
-                        <textarea name="experience_taches[]" rows="3" placeholder="Ex : Accueillir et orienter la clientèle"></textarea>
-                    </label>
-                    <label>Nom de l’entreprise et localisation
-                        <input type="text" name="experience_entreprises[]" placeholder="Ex : Airtel Gabon, Libreville">
-                    </label>
+                    <!-- Conteneur pour une expérience -->
+                    <div class="experience-group">
+                        <h4>Expérience Professionnelle 1</h4>
+                        <label>Date de début et fin de contrat
+                            <input type="text" name="experience_1_dates" placeholder="Ex : 2020-2023">
+                        </label>
+                        <label>Intitulé du poste occupé
+                            <input type="text" name="experience_1_postes" placeholder="Ex : Agent commercial">
+                        </label>
+                        <label>Tâches effectuées
+                            <textarea name="experience_1_taches" rows="3" placeholder="Ex : Accueillir et orienter la clientèle"></textarea>
+                        </label>
+                        <label>Nom de l’entreprise et localisation
+                            <input type="text" name="experience_1_entreprises" placeholder="Ex : Airtel Gabon, Libreville">
+                        </label>
+                    </div>
                     <a class="add-button" onclick="addExperience()">+ Ajouter une expérience</a>
                 </div>
-            </div>
-
-            <!-- Formation -->
-            <div class="section">
-                <div class="section-title">FORMATIONS</div>
+                
                 <div id="formationFields">
-                    <label>Nom du diplôme ou formation
-                        <input type="text" name="formation_diplomes[]" placeholder="Ex : Baccalauréat série B">
-                    </label>
-                    <label>Filière / Série
-                        <input type="text" name="formation_series[]" placeholder="Ex : série B">
-                    </label>
-                    <label>Date et lieu
-                        <input type="text" name="formation_dates[]" placeholder="Ex : 2020 - Libreville">
-                    </label>
-                    <label>Nom de l’établissement
-                        <input type="text" name="formation_etablissements[]" placeholder="Ex : Lycée National">
-                    </label>
+                    <!-- Conteneur pour une formation -->
+                    <div class="formation-group">
+                        <h4>Formation 1</h4>
+                        <label>Nom du diplôme ou formation
+                            <input type="text" name="formation_1_diplomes" placeholder="Ex : Baccalauréat série B">
+                        </label>
+                        <label>Filière / Série
+                            <input type="text" name="formation_1_series" placeholder="Ex : Série B">
+                        </label>
+                        <label>Date et lieu
+                            <input type="text" name="formation_1_dates" placeholder="Ex : 2020 - Libreville">
+                        </label>
+                        <label>Nom de l’établissement
+                            <input type="text" name="formation_1_etablissements" placeholder="Ex : Lycée National">
+                        </label>
+                    </div>
                     <a class="add-button" onclick="addFormation()">+ Ajouter une formation</a>
                 </div>
-            </div>
-
+                
             <!-- Centres d'intérêt -->
             <div class="section">
                 <div class="section-title">CENTRES D'INTERÊTS</div>
@@ -298,7 +301,7 @@ input:required:focus {
              <!-- Informations complémentaires -->
              <div class="section">
                <div class="section-title">INFORMATIONS COMPLEMENTAIRES</div>
-                <textarea name="INFORMATIONS COMPLEMENTAIRES" rows="3" placeholder="Ex : Permis de conduire ou un autres choses"></textarea>
+                <textarea name="Informations complémentaires" rows="3" placeholder="Ex : Permis de conduire ou un autres choses"></textarea>
             </div>
 
             <button type="submit">Valider et envoyer</button>
@@ -328,7 +331,7 @@ input:required:focus {
 
         // Fonction pour ajouter une compétence professionnelle
         function addProfessionnelle() {
-            const container = document.getElementById('competencesProfessionnellesFields');
+            const container = document.getElementById('Domaines de CompétencesFields');
             const newInput = document.createElement('input');
             newInput.type = 'text';
             newInput.name = 'competences_professionnelles[]';
@@ -336,42 +339,53 @@ input:required:focus {
             container.insertBefore(newInput, container.querySelector('.add-button'));
         }
 
+        let experienceCounter = 1;
+let formationCounter = 1;
 
-        function addExperience() {
+function addExperience() {
+    experienceCounter++;
     const container = document.getElementById('experienceFields');
     container.insertAdjacentHTML('beforeend', `
-        <label>Date de début et fin de contrat
-            <input type="text" name="experience_dates[]" placeholder="Ex : 2020-2023">
-        </label>
-        <label>Intitulé du poste occupé
-            <input type="text" name="experience_postes[]" placeholder="Ex : Agent commercial">
-        </label>
-        <label>Tâches effectuées
-            <textarea name="experience_taches[]" rows="3" placeholder="Ex : Accueillir et orienter la clientèle"></textarea>
-        </label>
-        <label>Nom de l’entreprise et localisation
-            <input type="text" name="experience_entreprises[]" placeholder="Ex : Airtel Gabon, Libreville">
-        </label>
+        <div class="experience-group">
+            <h4>Expérience Professionnelle ${experienceCounter}</h4>
+            <label>Date de début et fin de contrat
+                <input type="text" name="experience_${experienceCounter}_dates" placeholder="Ex : 2020-2023">
+            </label>
+            <label>Intitulé du poste occupé
+                <input type="text" name="experience_${experienceCounter}_postes" placeholder="Ex : Agent commercial">
+            </label>
+            <label>Tâches effectuées
+                <textarea name="experience_${experienceCounter}_taches" rows="3" placeholder="Ex : Accueillir et orienter la clientèle"></textarea>
+            </label>
+            <label>Nom de l’entreprise et localisation
+                <input type="text" name="experience_${experienceCounter}_entreprises" placeholder="Ex : Airtel Gabon, Libreville">
+            </label>
+        </div>
     `);
 }
 
 function addFormation() {
+    formationCounter++;
     const container = document.getElementById('formationFields');
     container.insertAdjacentHTML('beforeend', `
-        <label>Nom du diplôme ou formation
-            <input type="text" name="formation_diplomes[]" placeholder="Ex : Baccalauréat série B">
-        </label>
-        <label>Filière / Série
-            <input type="text" name="formation_series[]" placeholder="Ex : Littéraire">
-        </label>
-        <label>Date et lieu
-            <input type="text" name="formation_dates[]" placeholder="Ex : 2020 - Libreville">
-        </label>
-        <label>Nom de l’établissement
-            <input type="text" name="formation_etablissements[]" placeholder="Ex : Lycée National">
-        </label>
+        <div class="formation-group">
+            <h4>Formation ${formationCounter}</h4>
+            <label>Nom du diplôme ou formation
+                <input type="text" name="formation_${formationCounter}_diplomes" placeholder="Ex : Baccalauréat série B">
+            </label>
+            <label>Filière / Série
+                <input type="text" name="formation_${formationCounter}_series" placeholder="Ex : Littéraire">
+            </label>
+            <label>Date et lieu
+                <input type="text" name="formation_${formationCounter}_dates" placeholder="Ex : 2020 - Libreville">
+            </label>
+            <label>Nom de l’établissement
+                <input type="text" name="formation_${formationCounter}_etablissements" placeholder="Ex : Lycée National">
+            </label>
+        </div>
     `);
 }
+
 
     </script>
 </body>
