@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire CV</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(180deg, #094102 0%, #0A7303 100%);
+    color: #333;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 40px;
+    background: linear-gradient(145deg, #ffffff, #f7f7f7);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border-left: 8px solid #ff5700;
+}
+
+h1 {
+    text-align: center;
+    font-size: 28px;
+    background: linear-gradient(90deg, #094102, #ff5700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #094102;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+    background: linear-gradient(90deg, #ffffff, #f9f9f9);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #ff5700;
+    box-shadow: 0 0 6px rgba(255, 87, 0, 0.3);
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    background: linear-gradient(90deg, #094102, #ff5700);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(90deg, #076301, #e64a00);
+}
+
+.add-button {
+    display: inline-block;
+    margin: 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ff5700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.add-button:hover {
+    color: #d94c00;
+}
+
+.section-title {
+    font-size: 18px;
+    color: #094102;
+    margin-bottom: 15px;
+    background: linear-gradient(90deg, #094102, #ff5700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #ff5700;
+}
+
+::placeholder {
+    color: #bbb;
+    font-style: italic;
+}
+
+/* Champs obligatoires marqués */
+input:required:focus {
+    border-color: #ff5700;
+}
+
+/* Adaptation responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    input,
+    select,
+    textarea {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    button {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .section-title {
+        font-size: 16px;
+    }
+
+    label {
+        font-size: 12px;
+    }
+}
+
+/* Conteneur spécifique pour l'image */
+.image-container {
+    text-align: center; /* Centrer l'image dans le conteneur */
+    margin-bottom: 20px; /* Ajouter un espacement entre l'image et le formulaire */
+}
+
+.image-container .responsive-image {
+    max-width: 100%; /* Image responsive : ne dépasse pas le conteneur */
+    height: auto; /* Conserve les proportions */
+    border-radius: 8px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre douce (optionnel) */
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="Business-Facebook-Cover-05.jpg" alt="Formulaire Illustration" class="responsive-image">
+    </div>
+        <h1>Remplissez ce formulaire pour obtenir votre CV professionnel</h1>
+        <form action="https://formspree.io/f/xeoqvkdd" method="POST">
+            <!-- Informations personnelles -->
+            <div class="section">
+                <div class="section-title">INFORMATIONS PERSONNELLES</div>
+                <label>Nom et Prénom
+                    <input type="text" name="nom_prenom" placeholder="Ex : MAVOUNGOU  Jeanne">
+                </label>
+                <label>Email
+                    <input type="email" name="email" placeholder="Ex : mavoungouj@email.com">
+                </label>
+                <label>Téléphone
+                    <input type="text" name="telephone" placeholder="Ex : +241 60 00 00 00 / 074 00 07 08">
+                </label>
+                <label>Adresse
+                    <input type="text" name="adresse" placeholder="Ex : Libreville, Gabon">
+                </label>
+                <label>N°ONE / PNPE
+                    <input type="text" name="N°ONE / PNPE" placeholder="Pôle National de Promotion de l'Emploi(PNPE) / Office National de l'Emploi(ONE)">
+                </label>
+                <label>Poste recherché / Occupé
+                    <input type="text" name="Poste recherché / Occupé" placeholder="Ex : Agent Administratif">
+                </label>
+                <label>N° du modèle de CV & la formule
+                    <input type="text" name="N° du modèle de CV & la formule" placeholder="Ex : N°030 - Formule N°1">
+                </label>
+                <label>Objectifs Professionnels
+                    <textarea name="objectifs" rows="3" placeholder="Décrivez vos objectifs professionnels"></textarea>
+                </label>
+            </div>
+
+            <!-- Compétences -->
+            <div class="section">
+                <div class="section-title">COMPETENCES</div>
+                <div id="competenceFields">
+                    <div class="competence-category" id="languesFields">
+                        <label>Langues
+                            <input type="text" name="langues[]" placeholder="Ex : Français (courant)">
+                        </label>
+                        <a class="add-button" onclick="addLangue()">+ Ajouter une langue</a>
+                    </div>
+                    
+                    <div class="competence-category" id="competencesInformatiqueFields">
+                        <label>Compétences Informatiques
+                            <input type="text" name="competences_informatiques[]" placeholder="Ex : Word (avancé)">
+                        </label>
+                        <a class="add-button" onclick="addLogiciel()">+ Ajouter un logiciel</a>
+                    </div>
+            
+                    <div class="competence-category" id="competencesProfessionnellesFields">
+                        <label>Compétences Professionnelles
+                            <input type="text" name="competences_professionnelles[]" placeholder="Ex : Gestion de projet (intermédiaire)">
+                        </label>
+                        <a class="add-button" onclick="addProfessionnelle()">+ Ajouter une compétence professionnelle</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expériences Professionnelles -->
+            <div class="section">
+                <div class="section-title">EXPERIENCES PROFESSIONNELLES</div>
+                <div id="experienceFields">
+                    <label>Date de début et fin de contrat
+                        <input type="text" name="experience_dates[]" placeholder="Ex : 2020-2023">
+                    </label>
+                    <label>Intitulé du poste occupé
+                        <input type="text" name="experience_postes[]" placeholder="Ex : Agent commercial">
+                    </label>
+                    <label>Tâches effectuées
+                        <textarea name="experience_taches[]" rows="3" placeholder="Ex : Accueillir et orienter la clientèle"></textarea>
+                    </label>
+                    <label>Nom de l’entreprise et localisation
+                        <input type="text" name="experience_entreprises[]" placeholder="Ex : Airtel Gabon, Libreville">
+                    </label>
+                    <a class="add-button" onclick="addExperience()">+ Ajouter une expérience</a>
+                </div>
+            </div>
+
+            <!-- Formation -->
+            <div class="section">
+                <div class="section-title">FORMATIONS</div>
+                <div id="formationFields">
+                    <label>Nom du diplôme ou formation
+                        <input type="text" name="formation_diplomes[]" placeholder="Ex : Baccalauréat série B">
+                    </label>
+                    <label>Filière / Série
+                        <input type="text" name="formation_series[]" placeholder="Ex : série B">
+                    </label>
+                    <label>Date et lieu
+                        <input type="text" name="formation_dates[]" placeholder="Ex : 2020 - Libreville">
+                    </label>
+                    <label>Nom de l’établissement
+                        <input type="text" name="formation_etablissements[]" placeholder="Ex : Lycée National">
+                    </label>
+                    <a class="add-button" onclick="addFormation()">+ Ajouter une formation</a>
+                </div>
+            </div>
+
+            <!-- Centres d'intérêt -->
+            <div class="section">
+                <div class="section-title">CENTRES D'INTERÊTS</div>
+                <textarea name="centres_interet" rows="3" placeholder="Ex : Sport, lecture, bénévolat"></textarea>
+            </div>
+
+             <!-- Informations complémentaires -->
+             <div class="section">
+               <div class="section-title">INFORMATIONS COMPLEMENTAIRES</div>
+                <textarea name="INFORMATIONS COMPLEMENTAIRES" rows="3" placeholder="Ex : Permis de conduire ou un autres choses"></textarea>
+            </div>
+
+            <button type="submit">Valider et envoyer</button>
+        </form>
+    </div>
+
+    <script>
+                // Fonction pour ajouter une langue
+        function addLangue() {
+            const container = document.getElementById('languesFields');
+            const newInput = document.createElement('input');
+            newInput.type = 'text';
+            newInput.name = 'langues[]';
+            newInput.placeholder = 'Nouvelle langue';
+            container.insertBefore(newInput, container.querySelector('.add-button'));
+        }
+
+        // Fonction pour ajouter une compétence informatique
+        function addLogiciel() {
+            const container = document.getElementById('competencesInformatiqueFields');
+            const newInput = document.createElement('input');
+            newInput.type = 'text';
+            newInput.name = 'competences_informatiques[]';
+            newInput.placeholder = 'Nouveau logiciel';
+            container.insertBefore(newInput, container.querySelector('.add-button'));
+        }
+
+        // Fonction pour ajouter une compétence professionnelle
+        function addProfessionnelle() {
+            const container = document.getElementById('competencesProfessionnellesFields');
+            const newInput = document.createElement('input');
+            newInput.type = 'text';
+            newInput.name = 'competences_professionnelles[]';
+            newInput.placeholder = 'Nouvelle compétence professionnelle';
+            container.insertBefore(newInput, container.querySelector('.add-button'));
+        }
+
+
+        function addExperience() {
+    const container = document.getElementById('experienceFields');
+    container.insertAdjacentHTML('beforeend', `
+        <label>Date de début et fin de contrat
+            <input type="text" name="experience_dates[]" placeholder="Ex : 2020-2023">
+        </label>
+        <label>Intitulé du poste occupé
+            <input type="text" name="experience_postes[]" placeholder="Ex : Agent commercial">
+        </label>
+        <label>Tâches effectuées
+            <textarea name="experience_taches[]" rows="3" placeholder="Ex : Accueillir et orienter la clientèle"></textarea>
+        </label>
+        <label>Nom de l’entreprise et localisation
+            <input type="text" name="experience_entreprises[]" placeholder="Ex : Airtel Gabon, Libreville">
+        </label>
+    `);
+}
+
+function addFormation() {
+    const container = document.getElementById('formationFields');
+    container.insertAdjacentHTML('beforeend', `
+        <label>Nom du diplôme ou formation
+            <input type="text" name="formation_diplomes[]" placeholder="Ex : Baccalauréat série B">
+        </label>
+        <label>Filière / Série
+            <input type="text" name="formation_series[]" placeholder="Ex : Littéraire">
+        </label>
+        <label>Date et lieu
+            <input type="text" name="formation_dates[]" placeholder="Ex : 2020 - Libreville">
+        </label>
+        <label>Nom de l’établissement
+            <input type="text" name="formation_etablissements[]" placeholder="Ex : Lycée National">
+        </label>
+    `);
+}
+
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
