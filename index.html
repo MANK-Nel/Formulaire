@@ -6,171 +6,312 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulaire CV</title>
     <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(180deg, #094102 0%, #0A7303 100%);
+            color: #333;
+            min-height: 100vh;
+        }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(180deg, #094102 0%, #0A7303 100%);
-    color: #333;
-    min-height: 100vh;
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: clamp(20px, 4vw, 40px);
+            background: linear-gradient(145deg, #ffffff, #f7f7f7);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border-left: 8px solid #ff5700;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: clamp(24px, 4vw, 28px);
+            background: linear-gradient(90deg, #094102, #ff5700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: clamp(14px, 2vw, 16px);
+            font-weight: 600;
+            color: #094102;
+            position: relative;
+        }
+
+        .help-icon {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background: #094102;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 18px;
+            font-size: 12px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+        .help-tooltip {
+            display: none;
+            position: absolute;
+            background: #fff;
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            width: clamp(200px, 50vw, 250px);
+            z-index: 100;
+            top: 100%;
+            left: 0;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            font-weight: normal;
+            color: #666;
+            font-size: clamp(12px, 1.5vw, 14px);
+        }
+
+        .help-icon:hover + .help-tooltip {
+            display: block;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: clamp(8px, 2vw, 12px);
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: clamp(14px, 1.5vw, 16px);
+            transition: border-color 0.3s ease;
+            background: linear-gradient(90deg, #ffffff, #f9f9f9);
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #ff5700;
+            box-shadow: 0 0 6px rgba(255, 87, 0, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            background: linear-gradient(90deg, #094102, #ff5700);
+            color: white;
+            font-size: clamp(16px, 2vw, 18px);
+            font-weight: 600;
+            padding: clamp(10px, 2vw, 12px);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #076301, #e64a00);
+        }
+
+        .add-button {
+            display: inline-block;
+            margin: 10px 0;
+            font-size: clamp(14px, 1.5vw, 16px);
+            font-weight: 600;
+            color: #ff5700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .add-button:hover {
+            color: #d94c00;
+        }
+
+        .section-title {
+            font-size: clamp(18px, 2.5vw, 20px);
+            color: #094102;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #094102, #ff5700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #ff5700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-help {
+            font-size: clamp(13px, 1.5vw, 14px);
+            color: #666;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 6px;
+            border-left: 3px solid #094102;
+        }
+
+        .experience-group,
+        .formation-group {
+            background: #f9f9f9;
+            padding: clamp(15px, 3vw, 25px);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+        }
+
+        .experience-group h4,
+        .formation-group h4 {
+            color: #094102;
+            margin-top: 0;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
+            font-size: clamp(16px, 2vw, 18px);
+        }
+
+        .guide-button {
+            background: #094102;
+            color: white;
+            padding: clamp(10px, 2vw, 15px) clamp(20px, 4vw, 30px);
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 0;
+            transition: background 0.3s;
+            font-weight: 600;
+        }
+
+        .guide-button:hover {
+            background: #0A7303;
+        }
+
+        #guideModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 20px auto;
+            padding: clamp(20px, 4vw, 30px);
+            width: 95%;
+            max-width: 800px;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+
+            .help-tooltip {
+                width: calc(100vw - 40px);
+                left: 50%;
+                transform: translateX(-50%);
+                .help-tooltip,
+
+    max-width: 100%;
+    overflow-wrap: break-word;
 }
 
-.container {
-    max-width: 900px;
-    margin: 30px auto;
-    padding: 40px;
-    background: linear-gradient(145deg, #ffffff, #f7f7f7);
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    border-left: 8px solid #ff5700;
-}
+            }
+        }
 
-h1 {
-    text-align: center;
-    font-size: 28px;
-    background: linear-gradient(90deg, #094102, #ff5700);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 20px;
-}
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
 
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
+            .container {
+                margin: 0;
+                padding: 15px;
+                border-radius: 8px;
+                width: 100%;
+                max-width: 100%;
+                margin: 0 auto;
+                padding: 15px;
+                overflow: hidden; /* Empêche le débordement */
+                box-sizing: border-box;
+            }
 
-label {
-    font-size: 14px;
-    font-weight: 600;
-    color: #094102;
-}
+            input,
+            select,
+            textarea {
+                padding: 8px;
+                width: 100%; /* S'assure que les champs ne dépassent pas */
+                max-width: 100%; /* Empêche tout dépassement */
+                box-sizing: border-box; /* Inclut padding et bordure dans la largeur */
+            }
 
-input,
-select,
-textarea {
-    width: 100%;
-    padding: 12px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-    transition: border-color 0.3s ease;
-    background: linear-gradient(90deg, #ffffff, #f9f9f9);
-}
+            .section-title {
+                font-size: 16px;
+            }
 
-input:focus,
-select:focus,
-textarea:focus {
-    outline: none;
-    border-color: #ff5700;
-    box-shadow: 0 0 6px rgba(255, 87, 0, 0.3);
-}
+            label {
+                font-size: 12px;
+            }
+        }
 
-textarea {
-    resize: vertical;
-}
+        @media print {
+            body {
+                background: white;
+            }
 
-button {
-    background: linear-gradient(90deg, #094102, #ff5700);
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
+            .container {
+                box-shadow: none;
+                margin: 0;
+                padding: 20px;
+            }
 
-button:hover {
-    background: linear-gradient(90deg, #076301, #e64a00);
-}
+            .guide-button,
+            .add-button,
+            .help-icon,
+            .help-tooltip {
+                display: none;
+            }
+        }
 
-.add-button {
-    display: inline-block;
-    margin: 10px 0;
-    font-size: 14px;
-    font-weight: 600;
-    color: #ff5700;
-    cursor: pointer;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
 
-.add-button:hover {
-    color: #d94c00;
-}
-
-.section-title {
-    font-size: 18px;
-    color: #094102;
-    margin-bottom: 15px;
-    background: linear-gradient(90deg, #094102, #ff5700);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #ff5700;
-}
-
-::placeholder {
-    color: #bbb;
-    font-style: italic;
-}
-
-/* Champs obligatoires marqués */
-input:required:focus {
-    border-color: #ff5700;
-}
-
-/* Adaptation responsive */
-@media (max-width: 768px) {
-    .container {
-        padding: 20px;
-        margin: 20px;
-    }
-
-    h1 {
-        font-size: 24px;
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 15px;
-        margin: 10px;
-    }
-
-    h1 {
-        font-size: 20px;
-    }
-
-    input,
-    select,
-    textarea {
-        padding: 2px;
-        font-size: 13px;
-    }
-
-    button {
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    .section-title {
-        font-size: 16px;
-    }
-
-    label {
-        font-size: 12px;
-    }
-}
-
-/* Conteneur spécifique pour l'image */
+ /* Conteneur spécifique pour l'image */
 .image-container {
     text-align: center; /* Centrer l'image dans le conteneur */
     margin-bottom: 20px; /* Ajouter un espacement entre l'image et le formulaire */
@@ -183,6 +324,7 @@ input:required:focus {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre douce (optionnel) */
 }
 
+
     </style>
 </head>
 
@@ -190,34 +332,70 @@ input:required:focus {
     <div class="container">
         <div class="image-container">
             <img src="Business-Facebook-Cover-05.jpg" alt="Formulaire Illustration" class="responsive-image">
-    </div>
+        </div>
         <h1>Remplissez ce formulaire pour obtenir votre CV professionnel</h1>
-        <form action="https://formspree.io/f/xeoqvkdd" method="POST">
+        
+        <button onclick="openGuide()" class="guide-button">Guide de remplissage du CV</button>
+
+        <form action="https://formspree.io/f/mrbgraoo" method="POST">
             <!-- Informations personnelles -->
             <div class="section">
                 <div class="section-title">INFORMATIONS PERSONNELLES</div>
-                <label>Nom et Prénom
-                    <input type="text" name="nom_prenom" placeholder="Ex : MAVOUNGOU  Jeanne">
+                <div class="section-help">Cette section contient vos informations de contact essentielles.</div>
+                
+                <label>
+                    Nom et Prénom
+                    <span class="help-icon">?</span>
+                    <span class="help-tooltip">Écrivez votre nom en majuscules suivi de votre prénom avec une majuscule initiale.</span>
+                    <input type="text" name="nom_prenom" placeholder="Ex : MAVOUNGOU Jeanne">
                 </label>
-                <label>Email
+
+                <label>
+                    Email
+                    <span class="help-icon">?</span>
+                    <span class="help-tooltip">Utilisez une adresse email professionnelle que vous consultez régulièrement.</span>
                     <input type="email" name="email" placeholder="Ex : mavoungouj@email.com">
                 </label>
-                <label>Téléphone
+
+                <label>
+                    Téléphone
+                    <span class="help-icon">?</span>
+                    <span class="help-tooltip">Incluez votre indicatif pays et assurez-vous que le numéro est actif.</span>
                     <input type="text" name="telephone" placeholder="Ex : +241 60 00 00 00 / 074 00 07 08">
                 </label>
-                <label>Adresse
+
+                <label>
+                    Adresse
+                    <span class="help-icon">?</span>
+                    <span class="help-tooltip">Indiquez votre ville et pays de résidence.</span>
                     <input type="text" name="adresse" placeholder="Ex : Libreville, Gabon">
                 </label>
-                <label>N°ONE / PNPE
+
+                <label>
+                    N°ONE / PNPE
+                    <span class="help-icon">?</span>
+                    <span class="help-tooltip">Numéro d'inscription obligatoire pour certains emplois au Gabon.</span>
                     <input type="text" name="N°ONE / PNPE" placeholder="Pôle National de Promotion de l'Emploi(PNPE) / Office National de l'Emploi(ONE)">
                 </label>
-                <label>Poste recherché / Occupé
+
+                <label>
+                    Poste recherché / Occupé
+                    <span class="help-icon">?</span>
+                    <span class="help-tooltip">Précisez le titre du poste que vous recherchez ou occupez actuellement.</span>
                     <input type="text" name="Poste recherché / Occupé" placeholder="Ex : Agent Administratif">
                 </label>
-                <label>N° du modèle de CV & la formule
+
+                <label>
+                    N° du modèle de CV & la formule
+                    <span class="help-icon">?</span>
+                    <span class="help-tooltip">Référence pour le style de CV souhaité.</span>
                     <input type="text" name="N° du modèle de CV & la formule" placeholder="Ex : N°030 - Formule N°1">
                 </label>
-                <label>Objectifs Professionnels
+
+                <label>
+                    Objectifs Professionnels
+                    <span class="help-icon">?</span>
+                    <span class="help-tooltip">Décrivez brièvement vos aspirations professionnelles et ce que vous pouvez apporter à l'entreprise.</span>
                     <textarea name="objectifs" rows="3" placeholder="Décrivez vos objectifs professionnels"></textarea>
                 </label>
             </div>
@@ -225,23 +403,34 @@ input:required:focus {
             <!-- Compétences -->
             <div class="section">
                 <div class="section-title">COMPETENCES</div>
+                <div class="section-help">Listez vos compétences en précisant votre niveau de maîtrise.</div>
+                
                 <div id="competenceFields">
                     <div class="competence-category" id="languesFields">
-                        <label>Langues
+                        <label>
+                            Langues
+                            <span class="help-icon">?</span>
+                            <span class="help-tooltip">Précisez votre niveau : débutant, intermédiaire, avancé, ou courant.</span>
                             <input type="text" name="langues[]" placeholder="Ex : Français (courant)">
                         </label>
                         <a class="add-button" onclick="addLangue()">+ Ajouter une langue</a>
                     </div>
                     
                     <div class="competence-category" id="competencesInformatiqueFields">
-                        <label>Compétences Informatiques
+                        <label>
+                            Compétences Informatiques
+                            <span class="help-icon">?</span>
+                            <span class="help-tooltip">Mentionnez les logiciels que vous maîtrisez et votre niveau.</span>
                             <input type="text" name="competences_informatiques[]" placeholder="Ex : Word (avancé)">
                         </label>
                         <a class="add-button" onclick="addLogiciel()">+ Ajouter un logiciel</a>
                     </div>
             
                     <div class="competence-category" id="Domaines de CompétencesFields">
-                        <label>Domaines de Compétences 
+                        <label>
+                            Domaines de Compétences
+                            <span class="help-icon">?</span>
+                            <span class="help-tooltip">Listez vos compétences professionnelles principales.</span>
                             <input type="text" name="Domaines de Compétences[]" placeholder="Ex : Gestion de projet (intermédiaire)">
                         </label>
                         <a class="add-button" onclick="addProfessionnelle()">+ Ajouter un domaine de Compétence</a>
@@ -252,20 +441,33 @@ input:required:focus {
             <!-- Expériences Professionnelles -->
             <div class="section">
                 <div class="section-title">EXPERIENCES PROFESSIONNELLES</div>
+                <div class="section-help">Détaillez vos expériences professionnelles de la plus récente à la plus ancienne.</div>
+                
                 <div id="experienceFields">
-                    <!-- Conteneur pour une expérience -->
                     <div class="experience-group">
                         <h4>Expérience Professionnelle 1</h4>
-                        <label>Date de début et fin de contrat
-                            <input type="text" name="experience_1_dates" placeholder="Ex : 2020-2023">
+                        <label>
+                            Date de début et fin de contrat
+                            <span class="help-icon">?</span>
+                            <span class="help-tooltip">Format : Mois Année - Mois Année (ou "Present" si en cours)</span>
+                            <input type="text" name="experience_1_dates" placeholder="Ex : Janvier 2020 - Décembre 2023">
                         </label>
-                        <label>Intitulé du poste occupé
+                        <label>
+                            Intitulé du poste occupé
+                            <span class="help-icon">?</span>
+                            <span class="help-tooltip">Utilisez le titre exact de votre poste</span>
                             <input type="text" name="experience_1_postes" placeholder="Ex : Agent commercial">
                         </label>
-                        <label>Tâches effectuées
-                            <textarea name="experience_1_taches" rows="3" placeholder="Ex : Accueillir et orienter la clientèle"></textarea>
+                        <label>
+                            Tâches effectuées
+                            <span class="help-icon">?</span>
+                            <span class="help-tooltip">Listez vos principales responsabilités et réalisations</span>
+                            <textarea name="experience_1_taches" rows="3" placeholder="Ex : • Accueil et orientation de la clientèle&#10;• Gestion des réclamations&#10;• Suivi des ventes"></textarea>
                         </label>
-                        <label>Nom de l’entreprise et localisation
+                        <label>
+                            Nom de l'entreprise et localisation
+                            <span class="help-icon">?</span>
+                            <span class="help-tooltip">Nom complet de l'entreprise et ville</span>
                             <input type="text" name="experience_1_entreprises" placeholder="Ex : Airtel Gabon, Libreville">
                         </label>
                     </div>
@@ -273,43 +475,111 @@ input:required:focus {
                 </div>
                 
                 <div id="formationFields">
-                    <!-- Conteneur pour une formation -->
                     <div class="formation-group">
                         <h4>Formation 1</h4>
-                        <label>Nom du diplôme ou formation
+                        <label>
+                            Nom du diplôme ou formation
+                            <span class="help-icon">?</span>
+                            <span class="help-tooltip">Indiquez le nom complet du diplôme</span>
                             <input type="text" name="formation_1_diplomes" placeholder="Ex : Baccalauréat série B">
                         </label>
-                        <label>Filière / Série
+                        <label>
+                            Filière / Série
+                            <span class="help-icon">?</span>
+                            <span class="help-tooltip">Précisez votre spécialisation</span>
                             <input type="text" name="formation_1_series" placeholder="Ex : Série B">
                         </label>
-                        <label>Date et lieu
+                        <label>
+                            Date et lieu
+                            <span class="help-icon">?</span>
+                            <span class="help-tooltip">Année d'obtention et ville</span>
                             <input type="text" name="formation_1_dates" placeholder="Ex : 2020 - Libreville">
                         </label>
-                        <label>Nom de l’établissement
+                        <label>
+                            Nom de l'établissement
+                            <span class="help-icon">?</span>
+                            <span class="help-tooltip">Nom complet de l'établissement</span>
                             <input type="text" name="formation_1_etablissements" placeholder="Ex : Lycée National">
                         </label>
                     </div>
                     <a class="add-button" onclick="addFormation()">+ Ajouter une formation</a>
                 </div>
+            </div>
                 
             <!-- Centres d'intérêt -->
             <div class="section">
                 <div class="section-title">CENTRES D'INTERÊTS</div>
-                <textarea name="centres_interet" rows="3" placeholder="Ex : Sport, lecture, bénévolat"></textarea>
+                <div class="section-help">Mentionnez vos activités extra-professionnelles pertinentes.</div>
+                <label>
+                    <span class="help-icon">?</span>
+                    <span class="help-tooltip">Listez vos hobbies et activités qui montrent votre personnalité</span>
+                    <textarea name="centres_interet" rows="3" placeholder="Ex : • Sport : Football en club&#10;• Culture : Lecture, théâtre&#10;• Bénévolat : Association caritative"></textarea>
+                </label>
             </div>
 
-             <!-- Informations complémentaires -->
-             <div class="section">
-               <div class="section-title">INFORMATIONS COMPLEMENTAIRES</div>
-                <textarea name="Informations complémentaires" rows="3" placeholder="Ex : Permis de conduire ou un autres choses"></textarea>
+            <!-- Informations complémentaires -->
+            <div class="section">
+                <div class="section-title">INFORMATIONS COMPLEMENTAIRES</div>
+                <div class="section-help">Ajoutez toute information pertinente non mentionnée ailleurs.</div>
+                <label>
+                    <span class="help-icon">?</span>
+                    <span class="help-tooltip">Ex : permis de conduire, disponibilité, mobilité</span>
+                    <textarea name="Informations complémentaires" rows="3" placeholder="Ex : • Permis B&#10;• Disponibilité immédiate&#10;• Mobile sur Libreville"></textarea>
+                </label>
             </div>
 
             <button type="submit">Valider et envoyer</button>
         </form>
     </div>
 
+    <!-- Modal Guide -->
+    <div id="guideModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeGuide()">&times;</span>
+            <h2>Guide de remplissage du CV</h2>
+            <div class="guide-section">
+                <h3>Comment remplir chaque section ?</h3>
+                <h4>1. Informations Personnelles</h4>
+                <ul>
+                    <li>Utilisez une adresse email professionnelle</li>
+                    <li>Vérifiez que votre numéro de téléphone est correct</li>
+                    <li>Soyez précis dans votre adresse</li>
+                </ul>
+
+                <h4>2. Compétences</h4>
+                <ul>
+                    <li>Indiquez votre niveau pour chaque compétence</li>
+                    <li>Soyez honnête dans l'évaluation de vos compétences</li>
+                    <li>Utilisez des mots-clés pertinents pour votre secteur</li>
+                </ul>
+
+                <h4>3. Expériences Professionnelles</h4>
+                <ul>
+                    <li>Commencez par l'expérience la plus récente</li>
+                    <li>Utilisez des verbes d'action pour décrire vos tâches</li>
+                    <li>Quantifiez vos réalisations quand possible</li>
+                    <li>Soyez précis dans les dates</li>
+                </ul>
+
+                <h4>4. Formation</h4>
+                <ul>
+                    <li>Mentionnez vos diplômes les plus pertinents</li>
+                    <li>Incluez les formations professionnelles importantes</li>
+                    <li>Précisez les spécialisations pertinentes</li>
+                </ul>
+
+                <h4>5. Centres d'Intérêts</h4>
+                <ul>
+                    <li>Choisissez des activités qui montrent des qualités professionnelles</li>
+                    <li>Mentionnez les activités associatives pertinentes</li>
+                    <li>Restez concis et pertinent</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <script>
-                // Fonction pour ajouter une langue
+        // Fonction pour ajouter une langue
         function addLangue() {
             const container = document.getElementById('languesFields');
             const newInput = document.createElement('input');
@@ -340,60 +610,83 @@ input:required:focus {
         }
 
         let experienceCounter = 1;
-let formationCounter = 1;
+        let formationCounter = 1;
 
-function addExperience() {
-    experienceCounter++;
-    const container = document.getElementById('experienceFields');
-    container.insertAdjacentHTML('beforeend', `
-        <div class="experience-group">
-            <h4>Expérience Professionnelle ${experienceCounter}</h4>
-            <label>Date de début et fin de contrat
-                <input type="text" name="experience_${experienceCounter}_dates" placeholder="Ex : 2020-2023">
-            </label>
-            <label>Intitulé du poste occupé
-                <input type="text" name="experience_${experienceCounter}_postes" placeholder="Ex : Agent commercial">
-            </label>
-            <label>Tâches effectuées
-                <textarea name="experience_${experienceCounter}_taches" rows="3" placeholder="Ex : Accueillir et orienter la clientèle"></textarea>
-            </label>
-            <label>Nom de l’entreprise et localisation
-                <input type="text" name="experience_${experienceCounter}_entreprises" placeholder="Ex : Airtel Gabon, Libreville">
-            </label>
-        </div>
-    `);
-}
+        function addExperience() {
+            experienceCounter++;
+            const container = document.getElementById('experienceFields');
+            container.insertAdjacentHTML('beforeend', `
+                <div class="experience-group">
+                    <h4>Expérience Professionnelle ${experienceCounter}</h4>
+                    <label>Date de début et fin de contrat
+                        <span class="help-icon">?</span>
+                        <span class="help-tooltip">Format : Mois Année - Mois Année</span>
+                        <input type="text" name="experience_${experienceCounter}_dates" placeholder="Ex : Janvier 2020 - Décembre 2023">
+                    </label>
+                    <label>Intitulé du poste occupé
+                        <span class="help-icon">?</span>
+                        <span class="help-tooltip">Titre exact du poste</span>
+                        <input type="text" name="experience_${experienceCounter}_postes" placeholder="Ex : Agent commercial">
+                    </label>
+                    <label>Tâches effectuées
+                        <span class="help-icon">?</span>
+                        <span class="help-tooltip">Listez vos principales responsabilités</span>
+                        <textarea name="experience_${experienceCounter}_taches" rows="3" placeholder="Ex : • Accueil et orientation de la clientèle&#10;• Gestion des réclamations&#10;• Suivi des ventes"></textarea>
+                    </label>
+                    <label>Nom de l'entreprise et localisation
+                        <span class="help-icon">?</span>
+                        <span class="help-tooltip">Nom complet de l'entreprise et ville</span>
+                        <input type="text" name="experience_${experienceCounter}_entreprises" placeholder="Ex : Airtel Gabon, Libreville">
+                    </label>
+                </div>
+            `);
+        }
 
-function addFormation() {
-    formationCounter++;
-    const container = document.getElementById('formationFields');
-    container.insertAdjacentHTML('beforeend', `
-        <div class="formation-group">
-            <h4>Formation ${formationCounter}</h4>
-            <label>Nom du diplôme ou formation
-                <input type="text" name="formation_${formationCounter}_diplomes" placeholder="Ex : Baccalauréat série B">
-            </label>
-            <label>Filière / Série
-                <input type="text" name="formation_${formationCounter}_series" placeholder="Ex : Littéraire">
-            </label>
-            <label>Date et lieu
-                <input type="text" name="formation_${formationCounter}_dates" placeholder="Ex : 2020 - Libreville">
-            </label>
-            <label>Nom de l’établissement
-                <input type="text" name="formation_${formationCounter}_etablissements" placeholder="Ex : Lycée National">
-            </label>
-        </div>
-    `);
-}
+        function addFormation() {
+            formationCounter++;
+            const container = document.getElementById('formationFields');
+            container.insertAdjacentHTML('beforeend', `
+                <div class="formation-group">
+                    <h4>Formation ${formationCounter}</h4>
+                    <label>Nom du diplôme ou formation
+                        <span class="help-icon">?</span>
+                        <span class="help-tooltip">Nom complet du diplôme</span>
+                        <input type="text" name="formation_${formationCounter}_diplomes" placeholder="Ex : Baccalauréat série B">
+                    </label>
+                    <label>Filière / Série
+                        <span class="help-icon">?</span>
+                        <span class="help-tooltip">Votre spécialisation</span>
+                        <input type="text" name="formation_${formationCounter}_series" placeholder="Ex : Littéraire">
+                    </label>
+                    <label>Date et lieu
+                        <span class="help-icon">?</span>
+                        <span class="help-tooltip">Année d'obtention et ville</span>
+                        <input type="text" name="formation_${formationCounter}_dates" placeholder="Ex : 2020 - Libreville">
+                    </label>
+                    <label>Nom de l'établissement
+                        <span class="help-icon">?</span>
+                        <span class="help-tooltip">Nom complet de l'établissement</span>
+                        <input type="text" name="formation_${formationCounter}_etablissements" placeholder="Ex : Lycée National">
+                    </label>
+                </div>
+            `);
+        }
 
+        function openGuide() {
+            document.getElementById('guideModal').style.display = 'block';
+        }
 
+        function closeGuide() {
+            document.getElementById('guideModal').style.display = 'none';
+        }
+
+        // Fermer le modal en cliquant en dehors
+        window.onclick = function(event) {
+            const modal = document.getElementById('guideModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
