@@ -1,6 +1,40 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <style>
+    /* Loader Chronos-Services */
+    #loader-chronos {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #094102 0%, #FF5700 100%);
+      z-index: 9999;
+      transition: opacity 0.5s;
+    }
+    .loader-text {
+      color: #fff;
+      font-family: 'Poppins', Helvetica, Arial, sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      opacity: 0.1;
+      animation: loaderFadeIn 1.5s cubic-bezier(.4,0,.2,1) forwards, loaderPulse 1.2s 1.5s infinite alternate;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    @keyframes loaderFadeIn {
+      from { opacity: 0.1; filter: blur(6px); }
+      to   { opacity: 1; filter: blur(0); }
+    }
+    @keyframes loaderPulse {
+      from { letter-spacing: 2px; }
+      to   { letter-spacing: 8px; }
+    }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV Professionnel - Choisissez votre profil</title>
@@ -551,6 +585,10 @@
     </style>
 </head>
 <body>
+    <!-- Loader Chronos-Services : affiché au chargement, masqué après 5s -->
+    <div id="loader-chronos">
+      <span class="loader-text">Chronos-Services</span>
+    </div>
     <div class="container">
         <!-- PAGE D'ACCUEIL - SÉLECTION PROFIL -->
         <section id="welcomeSection" class="welcome-section fade-enter">
@@ -1262,4 +1300,17 @@ ${structuredData.commentaires_supplementaires || 'Aucun commentaire supplémenta
         document.addEventListener('DOMContentLoaded', setupFormValidation);
     </script>
 </body>
+    <!-- Script pour masquer le loader après 5s -->
+    <script>
+      // Affiche le loader au chargement, le masque après 5s
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          var loader = document.getElementById('loader-chronos');
+          if(loader) loader.style.opacity = '0';
+          setTimeout(function(){
+            if(loader) loader.style.display = 'none';
+          }, 600); // transition douce
+        }, 5000); // visible au moins 5s
+      });
+    </script>
 </html>
