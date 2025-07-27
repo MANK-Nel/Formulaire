@@ -554,28 +554,20 @@
     <div class="container">
         <!-- PAGE D'ACCUEIL - SÉLECTION PROFIL -->
         <section id="welcomeSection" class="welcome-section fade-enter">
-
             <h1>Créez votre CV professionnel</h1>
             <p>Choisissez le parcours qui correspond le mieux à votre profil pour une expérience optimisée</p>
-
-            <!-- Bouton unique pour télécharger le catalogue PDF -->
-            <div style="display:flex; justify-content:center; margin-bottom:30px;">
-                <a href="catalogue-cv.pdf" download class="profile-btn" style="max-width:320px; width:100%; text-align:center; text-decoration:none;">
-                    Télécharger le catalogue
-                </a>
-            </div>
-
+            
             <div class="profiles-grid">
                 <!-- Profil Débutant -->
                 <div class="profile-card" onclick="selectProfile('debutant')">
                     <h3>Débutant</h3>
-                    <p>Vous n'avez jamais fait de CV ou vous avez besoin d’aide ?<br><span style="color:#094102; font-weight:600;">Ce profil est fait pour vous !</span></p>
+                    <p>Vous n'avez jamais rédigé de CV ou vous souhaitez être guidé étape par étape</p>
                     <ul class="features">
-                        <li>Guide étape par étape</li>
-                        <li>Explications simples</li>
+                        <li>Guide interactif complet</li>
+                        <li>Explications détaillées</li>
                         <li>Exemples concrets</li>
-                        <li>Conseils adaptés</li>
-                        <li>Navigation claire</li>
+                        <li>Conseils personnalisés</li>
+                        <li>Navigation étape par étape</li>
                     </ul>
                     <button class="profile-btn">Commencer le guide</button>
                 </div>
@@ -616,6 +608,7 @@
                 <button class="back-btn" onclick="showWelcome()">← Retour à l'accueil</button>
                 <h2>Guide de création de CV</h2>
                 <p>Nous allons vous accompagner à travers chaque section de votre CV</p>
+                
                 <div class="tutorial-progress">
                     <div class="progress-step active" id="step1">1</div>
                     <div class="progress-line" id="line1"></div>
@@ -952,8 +945,8 @@ Tapez 1, 2 ou 3 :`);
             }
             // Stocker le niveau d'urgence pour le formulaire expert
             localStorage.setItem('niveau_urgence', urgenceValue);
-            // Redirection automatique vers le formulaire principal (permet le retour)
-            window.location.href = '/formulaire-original.html';
+            // Redirection automatique vers le formulaire principal
+            window.location.href = 'formulaire-original.html';
         }
 
         function showWelcome() {
@@ -1057,8 +1050,8 @@ Tapez 1, 2 ou 3 :`);
             }
             // Stocker le niveau d'urgence pour le formulaire
             localStorage.setItem('niveau_urgence', urgenceValue);
-            // Redirection automatique vers le formulaire principal (permet le retour)
-            window.location.href = '/formulaire-original.html';
+            // Redirection automatique vers le formulaire principal
+            window.location.href = 'formulaire-original.html';
         }
 
         function resetTutorial() {

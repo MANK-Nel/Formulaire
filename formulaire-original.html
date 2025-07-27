@@ -330,7 +330,7 @@
 
 <body>
     <div class="container">
-        <button onclick="location.replace('index.html')" style="background:#fff; color:#094102; border:2px solid #094102; border-radius:8px; padding:10px 24px; font-weight:600; margin-bottom:20px; cursor:pointer;">← Retour à l'accueil</button>
+        <button onclick="location.replace('./index.html')" style="background:#fff; color:#094102; border:2px solid #094102; border-radius:8px; padding:10px 24px; font-weight:600; margin-bottom:20px; cursor:pointer;">← Retour à l'accueil</button>
         <div class="image-container">
             <img src="public/Business-Facebook-Cover-05.jpg" alt="Formulaire Illustration" class="responsive-image">
         </div>
@@ -598,7 +598,7 @@
                     localStorage.removeItem('niveau_urgence');
                 });
             }
-        });
+        }); // <-- fermeture correcte de la fonction DOMContentLoaded
         // Fonction pour ajouter une langue
         function addLangue() {
             const container = document.getElementById('languesFields');
@@ -708,16 +708,94 @@
             }
         }
 
-
-
-
-<script>
-// Ajout du message structuré pour le formulaire principal
-document.addEventListener('DOMContentLoaded', function() {
-  const mainForm = document.getElementById('mainForm');
-  if (mainForm) {
+        // Ajout du message structuré pour le formulaire principal
+const mainForm = document.getElementById('mainForm');
+if (mainForm) {
     mainForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const formData = new FormData(this);
-      // Construction dynamique du template HTML lisible
-      // Boucle sur toutes les formations
+        e.preventDefault();
+        const formData = new FormData(this);
+        // Construction dynamique du template HTML lisible
+        // Boucle sur toutes les formations
+        let formationsHtml = '';
+        let formationIndex = 1;
+        while(formData.get(`formation_${formationIndex}_diplomes`)) {
+            formationsHtml += `<tr><td>${formData.get(`formation_${formationIndex}_diplomes`)||''}</td><td>${formData.get(`formation_${formationIndex}_series`)||''}</td><td>${formData.get(`formation_${formationIndex}_dates`)||''}</td><td>${formData.get(`formation_${formationIndex}_etablissements`)||''}</td></tr>`;
+            formationIndex++;
+        }
+        // Boucle sur toutes les expériences
+        let experiencesHtml = '';
+        let experienceIndex = 1;
+        while(formData.get(`experience_${experienceIndex}_postes`)) {
+            experiencesHtml += `<div style="margin-bottom:16px;"><p><b>Poste :</b> ${formData.get(`experience_${experienceIndex}_postes`)||''}</p><p><b>Entreprise :</b> ${formData.get(`experience_${experienceIndex}_entreprises`)||''}</p><p><b>Dates :</b> ${formData.get(`experience_${experienceIndex}_dates`)||''}</p><ul>${(formData.get(`experience_${experienceIndex}_taches`)||'').split('\n').map(t=>t?`<li>${t}</li>`:'').join('')}</ul></div>`;
+            experienceIndex++;
+        }
+        // Boucle sur toutes les compétences informatiques
+        const competencesInformatiques = formData.getAll('competences_informatiques[]').join(', ');
+        // Boucle sur tous les domaines de compétences
+        const domainesCompetences = formData.getAll('Domaines de Compétences[]').join(', ');
+        // Boucle sur toutes les spécialisations
+        const competencesProfessionnelles = formData.getAll('competences_professionnelles[]').join(', ');
+        // Boucle sur toutes les langues
+        const langues = formData.getAll('langues[]').join(', ');
+        // Construction du message HTML final
+        const messageStructure = `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><title>Candidature reçue</title></head>
+<body style="font-family:'Poppins',Arial,sans-serif;color:#222;background:#fff;">
+  <div style="background:linear-gradient(90deg,#094102,#FF8A00);color:#fff;padding:16px;border-radius:8px;margin-bottom:24px;">
+    <h2>CANDIDATURE REÇUE – Profil ${formData.get('profil_utilisateur')||'Débutant/Expert'}</h2>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>🧍‍♀️ Informations personnelles</h3>
+    <p><b>Nom & Prénom :</b> ${formData.get('nom_prenom')||''}</p>
+    <p><b>Email :</b> ${formData.get('email')||''}</p>
+    <p><b>Téléphone :</b> ${formData.get('telephone')||''}</p>
+    <p><b>Adresse :</b> ${formData.get('adresse')||''}</p>
+    <p><b>N° ONE / PNPE :</b> ${formData.get('N°ONE / PNPE')||''}</p>
+    <p><b>Permis & Mobilité :</b> ${formData.get('Informations complémentaires')||''}</p>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>🎯 Poste Recherché & Objectif</h3>
+    <p><b>Poste visé :</b> ${formData.get('Poste recherché / Occupé')||''}</p>
+    <p><b>Objectif professionnel :</b></p>
+    <blockquote>${formData.get('objectifs')||''}</blockquote>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>📚 Formation</h3>
+    <table style="border-collapse:collapse;width:100%;margin-bottom:16px;">
+      <thead><tr><th>Diplôme</th><th>Spécialité</th><th>Année/Lieu</th><th>Établissement</th></tr></thead>
+      <tbody>
+        ${formationsHtml}
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>💼 Expériences Professionnelles</h3>
+    ${experiencesHtml}
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>🧠 Compétences</h3>
+    <p><b>Informatique :</b> ${competencesInformatiques}</p>
+    <p><b>Professionnelles :</b> ${domainesCompetences}</p>
+    <p><b>Spécialisations :</b> ${competencesProfessionnelles}</p>
+    <p><b>Langues :</b> ${langues}</p>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>❤️ Centres d’intérêt</h3>
+    <p>${formData.get('centres_interet')||''}</p>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>⏱️ Niveau d’urgence</h3>
+    <p><b>Urgence choisie :</b> ${formData.get('niveau_urgence')||''}</p>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>🔢 Modèle choisi</h3>
+    <p><b>Numéro de modèle :</b> ${formData.get('N° du modèle de CV & la formule')||''}</p>
+    <p><b>Formule choisie :</b> ${formData.get('N° du modèle de CV & la formule')||''}</p>
+  </div>
+</body>
+</html>
+        `;
+    </script>
+</html>
