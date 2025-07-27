@@ -103,125 +103,126 @@
         textarea:focus {
             outline: none;
             border-color: #ff5700;
-            box-shadow: 0 0 6px rgba(255, 87, 0, 0.3);
-        }
 
-        textarea {
-            resize: vertical;
-        }
+<script>
+// Ajout du message structuré pour le formulaire principal
+document.addEventListener('DOMContentLoaded', function() {
+  const mainForm = document.getElementById('mainForm');
+  if (mainForm) {
+    mainForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      // Construction dynamique du template HTML lisible
+      // Boucle sur toutes les formations
+      let formationsHtml = '';
+      let formationIndex = 1;
+      while(formData.get(`formation_${formationIndex}_diplomes`)) {
+        formationsHtml += `<tr><td>${formData.get(`formation_${formationIndex}_diplomes`)||''}</td><td>${formData.get(`formation_${formationIndex}_series`)||''}</td><td>${formData.get(`formation_${formationIndex}_dates`)||''}</td><td>${formData.get(`formation_${formationIndex}_etablissements`)||''}</td></tr>`;
+        formationIndex++;
+      }
+      // Boucle sur toutes les expériences
+      let experiencesHtml = '';
+      let experienceIndex = 1;
+      while(formData.get(`experience_${experienceIndex}_postes`)) {
+        experiencesHtml += `<div style="margin-bottom:16px;"><p><b>Poste :</b> ${formData.get(`experience_${experienceIndex}_postes`)||''}</p><p><b>Entreprise :</b> ${formData.get(`experience_${experienceIndex}_entreprises`)||''}</p><p><b>Dates :</b> ${formData.get(`experience_${experienceIndex}_dates`)||''}</p><ul>${(formData.get(`experience_${experienceIndex}_taches`)||'').split('\n').map(t=>t?`<li>${t}</li>`:'').join('')}</ul></div>`;
+        experienceIndex++;
+      }
+      // Boucle sur toutes les compétences informatiques
+      const competencesInformatiques = formData.getAll('competences_informatiques[]').join(', ');
+      // Boucle sur tous les domaines de compétences
+      const domainesCompetences = formData.getAll('Domaines de Compétences[]').join(', ');
+      // Boucle sur toutes les spécialisations
+      const competencesProfessionnelles = formData.getAll('competences_professionnelles[]').join(', ');
+      // Boucle sur toutes les langues
+      const langues = formData.getAll('langues[]').join(', ');
+      // Construction du message HTML final
+      const messageStructure = `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><title>Candidature reçue</title></head>
+<body style="font-family:'Poppins',Arial,sans-serif;color:#222;background:#fff;">
+  <div style="background:linear-gradient(90deg,#094102,#FF8A00);color:#fff;padding:16px;border-radius:8px;margin-bottom:24px;">
+    <h2>CANDIDATURE REÇUE – Profil ${formData.get('profil_utilisateur')||'Débutant/Expert'}</h2>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>🧍‍♀️ Informations personnelles</h3>
+    <p><b>Nom & Prénom :</b> ${formData.get('nom_prenom')||''}</p>
+    <p><b>Email :</b> ${formData.get('email')||''}</p>
+    <p><b>Téléphone :</b> ${formData.get('telephone')||''}</p>
+    <p><b>Adresse :</b> ${formData.get('adresse')||''}</p>
+    <p><b>N° ONE / PNPE :</b> ${formData.get('N°ONE / PNPE')||''}</p>
+    <p><b>Permis & Mobilité :</b> ${formData.get('Informations complémentaires')||''}</p>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>🎯 Poste Recherché & Objectif</h3>
+    <p><b>Poste visé :</b> ${formData.get('Poste recherché / Occupé')||''}</p>
+    <p><b>Objectif professionnel :</b></p>
+    <blockquote>${formData.get('objectifs')||''}</blockquote>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>📚 Formation</h3>
+    <table style="border-collapse:collapse;width:100%;margin-bottom:16px;">
+      <thead><tr><th>Diplôme</th><th>Spécialité</th><th>Année/Lieu</th><th>Établissement</th></tr></thead>
+      <tbody>
+        ${formationsHtml}
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>💼 Expériences Professionnelles</h3>
+    ${experiencesHtml}
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>🧠 Compétences</h3>
+    <p><b>Informatique :</b> ${competencesInformatiques}</p>
+    <p><b>Professionnelles :</b> ${domainesCompetences}</p>
+    <p><b>Spécialisations :</b> ${competencesProfessionnelles}</p>
+    <p><b>Langues :</b> ${langues}</p>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>❤️ Centres d’intérêt</h3>
+    <p>${formData.get('centres_interet')||''}</p>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>⏱️ Niveau d’urgence</h3>
+    <p><b>Urgence choisie :</b> ${formData.get('niveau_urgence')||''}</p>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>🔢 Modèle choisi</h3>
+    <p><b>Numéro de modèle :</b> ${formData.get('N° du modèle de CV & la formule')||''}</p>
+    <p><b>Formule choisie :</b> ${formData.get('N° du modèle de CV & la formule')||''}</p>
+  </div>
+</body>
+</html>
+      `;
+      // Ajout du champ caché
+      const hiddenField = document.createElement('input');
+      hiddenField.type = 'hidden';
+      hiddenField.name = 'message_structure';
+      hiddenField.value = messageStructure;
+      this.appendChild(hiddenField);
 
-        button {
-            background: linear-gradient(90deg, #094102, #ff5700);
-            color: white;
-            font-size: clamp(16px, 2vw, 18px);
-            font-weight: 600;
-            padding: clamp(10px, 2vw, 12px);
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.3s ease;
+      // Envoi réel du formulaire
+      fetch(this.action, {
+        method: 'POST',
+        body: new FormData(this),
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Demande envoyée avec succès !');
+          window.location.href = 'index.html';
+        } else {
+          alert('Erreur lors de l\'envoi.');
         }
-
-        button:hover {
-            background: linear-gradient(90deg, #076301, #e64a00);
-        }
-
-        .add-button {
-            display: inline-block;
-            margin: 10px 0;
-            font-size: clamp(14px, 1.5vw, 16px);
-            font-weight: 600;
-            color: #ff5700;
-            cursor: pointer;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .add-button:hover {
-            color: #d94c00;
-        }
-
-        .section-title {
-            font-size: clamp(18px, 2.5vw, 20px);
-            color: #094102;
-            margin-bottom: 15px;
-            background: linear-gradient(90deg, #094102, #ff5700);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #ff5700;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .section-help {
-            font-size: clamp(13px, 1.5vw, 14px);
-            color: #666;
-            margin-top: -10px;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: #f5f5f5;
-            border-radius: 6px;
-            border-left: 3px solid #094102;
-        }
-
-        .experience-group,
-        .formation-group {
-            background: #f9f9f9;
-            padding: clamp(15px, 3vw, 25px);
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #eee;
-        }
-
-        .experience-group h4,
-        .formation-group h4 {
-            color: #094102;
-            margin-top: 0;
-            margin-bottom: 15px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #ddd;
-            font-size: clamp(16px, 2vw, 18px);
-        }
-
-        .guide-button {
-            background: #094102;
-            color: white;
-            padding: clamp(10px, 2vw, 15px) clamp(20px, 4vw, 30px);
-            border-radius: 6px;
-            text-decoration: none;
-            display: inline-block;
-            margin: 10px 0;
-            transition: background 0.3s;
-            font-weight: 600;
-        }
-
-        .guide-button:hover {
-            background: #0A7303;
-        }
-
-        #guideModal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .modal-content {
-            background: white;
-            margin: 20px auto;
-            padding: clamp(20px, 4vw, 30px);
-            width: 95%;
-            max-width: 800px;
-            border-radius: 12px;
-            position: relative;
+      })
+      .finally(() => {
+        if (hiddenField.parentNode) hiddenField.parentNode.removeChild(hiddenField);
+      });
+    });
+  }
+});
+</script>
         }
 
         .close-modal {
@@ -387,7 +388,6 @@
                 </label>
 
                 <label>
-                    N° du modèle de CV & la formule
                     <span class="help-icon">?</span>
                     <span class="help-tooltip">Référence pour le style de CV souhaité.</span>
                     <input type="text" name="N° du modèle de CV & la formule" placeholder="Ex : N°030 - Formule N°1">
@@ -505,6 +505,122 @@
                     </div>
                     <a class="add-button" onclick="addFormation()">+ Ajouter une formation</a>
                 </div>
+
+<script>
+if (mainForm) {
+    mainForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        // Construction dynamique du template HTML lisible
+        // Boucle sur toutes les formations
+        let formationsHtml = '';
+        let formationIndex = 1;
+        while(formData.get(`formation_${formationIndex}_diplomes`)) {
+            formationsHtml += `<tr><td>${formData.get(`formation_${formationIndex}_diplomes`)||''}</td><td>${formData.get(`formation_${formationIndex}_series`)||''}</td><td>${formData.get(`formation_${formationIndex}_dates`)||''}</td><td>${formData.get(`formation_${formationIndex}_etablissements`)||''}</td></tr>`;
+            formationIndex++;
+        }
+        // Boucle sur toutes les expériences
+        let experiencesHtml = '';
+        let experienceIndex = 1;
+        while(formData.get(`experience_${experienceIndex}_postes`)) {
+            experiencesHtml += `<div style="margin-bottom:16px;"><p><b>Poste :</b> ${formData.get(`experience_${experienceIndex}_postes`)||''}</p><p><b>Entreprise :</b> ${formData.get(`experience_${experienceIndex}_entreprises`)||''}</p><p><b>Dates :</b> ${formData.get(`experience_${experienceIndex}_dates`)||''}</p><ul>${(formData.get(`experience_${experienceIndex}_taches`)||'').split('\n').map(t=>t?`<li>${t}</li>`:'').join('')}</ul></div>`;
+            experienceIndex++;
+        }
+        // Boucle sur toutes les compétences informatiques
+        const competencesInformatiques = formData.getAll('competences_informatiques[]').join(', ');
+        // Boucle sur tous les domaines de compétences
+        const domainesCompetences = formData.getAll('Domaines de Compétences[]').join(', ');
+        // Boucle sur toutes les spécialisations
+        const competencesProfessionnelles = formData.getAll('competences_professionnelles[]').join(', ');
+        // Boucle sur toutes les langues
+        const langues = formData.getAll('langues[]').join(', ');
+        // Construction du message HTML final
+        const messageStructure = `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><title>Candidature reçue</title></head>
+<body style="font-family:'Poppins',Arial,sans-serif;color:#222;background:#fff;">
+  <div style="background:linear-gradient(90deg,#094102,#FF8A00);color:#fff;padding:16px;border-radius:8px;margin-bottom:24px;">
+    <h2>CANDIDATURE REÇUE – Profil ${formData.get('profil_utilisateur')||'Débutant/Expert'}</h2>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>🧍‍♀️ Informations personnelles</h3>
+    <p><b>Nom & Prénom :</b> ${formData.get('nom_prenom')||''}</p>
+    <p><b>Email :</b> ${formData.get('email')||''}</p>
+    <p><b>Téléphone :</b> ${formData.get('telephone')||''}</p>
+    <p><b>Adresse :</b> ${formData.get('adresse')||''}</p>
+    <p><b>N° ONE / PNPE :</b> ${formData.get('N°ONE / PNPE')||''}</p>
+    <p><b>Permis & Mobilité :</b> ${formData.get('Informations complémentaires')||''}</p>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>🎯 Poste Recherché & Objectif</h3>
+    <p><b>Poste visé :</b> ${formData.get('Poste recherché / Occupé')||''}</p>
+    <p><b>Objectif professionnel :</b></p>
+    <blockquote>${formData.get('objectifs')||''}</blockquote>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>📚 Formation</h3>
+    <table style="border-collapse:collapse;width:100%;margin-bottom:16px;">
+      <thead><tr><th>Diplôme</th><th>Spécialité</th><th>Année/Lieu</th><th>Établissement</th></tr></thead>
+      <tbody>
+        ${formationsHtml}
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>💼 Expériences Professionnelles</h3>
+    ${experiencesHtml}
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>🧠 Compétences</h3>
+    <p><b>Informatique :</b> ${competencesInformatiques}</p>
+    <p><b>Professionnelles :</b> ${domainesCompetences}</p>
+    <p><b>Spécialisations :</b> ${competencesProfessionnelles}</p>
+    <p><b>Langues :</b> ${langues}</p>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>❤️ Centres d’intérêt</h3>
+    <p>${formData.get('centres_interet')||''}</p>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>⏱️ Niveau d’urgence</h3>
+    <p><b>Urgence choisie :</b> ${formData.get('niveau_urgence')||''}</p>
+  </div>
+  <div style="margin-bottom:24px;">
+    <h3>🔢 Modèle choisi</h3>
+    <p><b>Numéro de modèle :</b> ${formData.get('N° du modèle de CV & la formule')||''}</p>
+    <p><b>Formule choisie :</b> ${formData.get('N° du modèle de CV & la formule')||''}</p>
+  </div>
+</body>
+</html>
+        `;
+        // Ajout du champ caché
+        const hiddenField = document.createElement('input');
+        hiddenField.type = 'hidden';
+        hiddenField.name = 'message_structure';
+        hiddenField.value = messageStructure;
+        this.appendChild(hiddenField);
+
+        // Envoi réel du formulaire
+        fetch(this.action, {
+            method: 'POST',
+            body: new FormData(this),
+            headers: { 'Accept': 'application/json' }
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Demande envoyée avec succès !');
+                window.location.href = 'index.html';
+            } else {
+                alert('Erreur lors de l\'envoi.');
+            }
+        })
+        .finally(() => {
+            if (hiddenField.parentNode) hiddenField.parentNode.removeChild(hiddenField);
+        });
+    });
+}
+</script>
             </div>
                 
             <!-- Centres d'intérêt -->
