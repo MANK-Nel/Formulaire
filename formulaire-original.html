@@ -32,6 +32,7 @@
             font-size: clamp(24px, 4vw, 28px);
             background: linear-gradient(90deg, #094102, #ff5700);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
         }
@@ -147,6 +148,7 @@
             margin-bottom: 15px;
             background: linear-gradient(90deg, #094102, #ff5700);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             padding-bottom: 8px;
             border-bottom: 2px solid #ff5700;
@@ -247,12 +249,8 @@
                 width: calc(100vw - 40px);
                 left: 50%;
                 transform: translateX(-50%);
-                .help-tooltip,
-
-    max-width: 100%;
-    overflow-wrap: break-word;
-}
-
+                max-width: 100%;
+                overflow-wrap: break-word;
             }
         }
 
@@ -369,8 +367,7 @@
             <img src="public/Business-Facebook-Cover-05.jpg" alt="Formulaire Illustration" class="responsive-image">
         </div>
         <h1>Remplissez ce formulaire pour obtenir votre CV professionnel</h1>
-        
-        <button onclick="openGuide()" class="guide-button">Guide de remplissage du CV</button>
+        <div style="height:40px;"></div>
 
         <form action="https://formspree.io/f/mrbgraoo" method="POST" id="mainForm">
             <!-- Informations personnelles -->
@@ -515,6 +512,7 @@
                 <div id="formationFields">
                     <div class="formation-group" style="margin-top:2rem;">
                         <h4>Formation 1</h4>
+                        <div class="section-help">Mentionnez vos diplômes, formations et spécialisations les plus pertinents.</div>
                         <label>
                             Nom du diplôme ou formation
                             <span class="help-icon">?</span>
@@ -546,22 +544,22 @@
                 
             <!-- Centres d'intérêt -->
             <div class="section" style="margin-top:2.5rem;">
-                <div class="section-title">CENTRES D'INTERÊTS</div>
+                <div class="section-title">
+                    CENTRES D'INTERÊTS
+                </div>
                 <div class="section-help">Mentionnez vos activités extra-professionnelles pertinentes.</div>
                 <label>
-                    <span class="help-icon">?</span>
-                    <span class="help-tooltip">Listez vos hobbies et activités qui montrent votre personnalité</span>
                     <textarea name="centres_interet" rows="3" placeholder="Ex : • Sport : Football en club&#10;• Culture : Lecture, théâtre&#10;• Bénévolat : Association caritative"></textarea>
                 </label>
             </div>
 
             <!-- Informations complémentaires -->
             <div class="section" style="margin-top:2.5rem;">
-                <div class="section-title">INFORMATIONS COMPLEMENTAIRES</div>
+                <div class="section-title">
+                    INFORMATIONS COMPLEMENTAIRES
+                </div>
                 <div class="section-help">Ajoutez toute information pertinente non mentionnée ailleurs.</div>
                 <label>
-                    <span class="help-icon">?</span>
-                    <span class="help-tooltip">Ex : permis de conduire, disponibilité, mobilité</span>
                     <textarea name="Informations complémentaires" rows="3" placeholder="Ex : • Permis B&#10;• Disponibilité immédiate&#10;• Mobile sur Libreville"></textarea>
                 </label>
             </div>
@@ -570,51 +568,7 @@
         </form>
     </div>
 
-    <!-- Modal Guide -->
-    <div id="guideModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeGuide()">&times;</span>
-            <h2>Guide de remplissage du CV</h2>
-            <div class="guide-section">
-                <h3>Comment remplir chaque section ?</h3>
-                <h4>1. Informations Personnelles</h4>
-                <ul>
-                    <li>Utilisez une adresse email professionnelle</li>
-                    <li>Vérifiez que votre numéro de téléphone est correct</li>
-                    <li>Soyez précis dans votre adresse</li>
-                </ul>
-
-                <h4>2. Compétences</h4>
-                <ul>
-                    <li>Indiquez votre niveau pour chaque compétence</li>
-                    <li>Soyez honnête dans l'évaluation de vos compétences</li>
-                    <li>Utilisez des mots-clés pertinents pour votre secteur</li>
-                </ul>
-
-                <h4>3. Expériences Professionnelles</h4>
-                <ul>
-                    <li>Commencez par l'expérience la plus récente</li>
-                    <li>Utilisez des verbes d'action pour décrire vos tâches</li>
-                    <li>Quantifiez vos réalisations quand possible</li>
-                    <li>Soyez précis dans les dates</li>
-                </ul>
-
-                <h4>4. Formation</h4>
-                <ul>
-                    <li>Mentionnez vos diplômes les plus pertinents</li>
-                    <li>Incluez les formations professionnelles importantes</li>
-                    <li>Précisez les spécialisations pertinentes</li>
-                </ul>
-
-                <h4>5. Centres d'Intérêts</h4>
-                <ul>
-                    <li>Choisissez des activités qui montrent des qualités professionnelles</li>
-                    <li>Mentionnez les activités associatives pertinentes</li>
-                    <li>Restez concis et pertinent</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <!-- Espace réservé pour l'aération sous le titre principal -->
 
     <script>
         // Sauvegarde automatique du formulaire principal dans le localStorage
