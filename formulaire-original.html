@@ -551,6 +551,7 @@
                 <button type="button" id="resetFormBtn" style="background:#fff; color:#d94c00; border:2px solid #d94c00; border-radius:8px; padding:10px 24px; font-weight:600; cursor:pointer;">Réinitialiser le formulaire</button>
             </div>
             <div id="form-message"></div>
+            <input type="hidden" name="message" id="formatted-message">
             <button type="submit">Valider et envoyer</button>
         </form>
     </div>
@@ -786,4 +787,137 @@
         });
         // --- FIN ENVOI & MESSAGES ---
     </script>
+
+<!-- Script de structuration du message pour Formspree -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('mainForm');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const blocks = {
+            'INFORMATIONS PERSONNELLES': {},
+            'COMPÉTENCES CLÉS': [],
+            'LOGICIELS': [],
+            'LANGUES': [],
+            'EXPÉRIENCES PROFESSIONNELLES': [],
+            'FORMATIONS': [],
+            'AUTRES': {}
+        };
+
+        for (let [key, value] of formData.entries()) {
+            if (!value || key === 'message') continue;
+
+            if ([
+                'nom_prenom', 'email', 'telephone', 'adresse',
+                'N°ONE / PNPE', 'Poste recherché / Occupé',
+                'N° du modèle de CV & la formule', 'objectifs'
+            ].includes(key)) {
+                blocks['INFORMATIONS PERSONNELLES'][key] = value;
+            }
+            else if (key.startsWith('Domaines de Compétences') || key.startsWith('competences_professionnelles')) {
+                blocks['COMPÉTENCES CLÉS'].push(value);
+            }
+            else if (key.startsWith('competences_informatiques')) {
+                blocks['LOGICIELS'].push(value);
+            }
+            else if (key.startsWith('langues')) {
+                blocks['LANGUES'].push(value);
+            }
+            else if (/^experience_\d+_/.test(key)) {
+                const match = key.match(/^experience_(\d+)_([a-z]+)/);
+                if (match) {
+                    const idx = parseInt(match[1], 10) - 1;
+                    const field = match[2];
+                    if (!blocks['EXPÉRIENCES PROFESSIONNELLES'][idx]) blocks['EXPÉRIENCES PROFESSIONNELLES'][idx] = {};
+                    blocks['EXPÉRIENCES PROFESSIONNELLES'][idx][field] = value;
+                }
+            }
+            else if (/^formation_\d+_/.test(key)) {
+                const match = key.match(/^formation_(\d+)_([a-z]+)/);
+                if (match) {
+                    const idx = parseInt(match[1], 10) - 1;
+                    const field = match[2];
+                    if (!blocks['FORMATIONS'][idx]) blocks['FORMATIONS'][idx] = {};
+                    blocks['FORMATIONS'][idx][field] = value;
+                }
+            }
+            else {
+                blocks['AUTRES'][key] = value;
+            }
+        }
+
+        let message = '';
+        message += `=== INFORMATIONS PERSONNELLES ===\n`;
+        for (const [k, v] of Object.entries(blocks['INFORMATIONS PERSONNELLES'])) {
+            let label = k.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            message += `- ${label} : ${v}\n`;
+        }
+        message += `\n`;
+
+        if (blocks['COMPÉTENCES CLÉS'].length) {
+            message += `=== COMPÉTENCES CLÉS ===\n`;
+            blocks['COMPÉTENCES CLÉS'].forEach((c) => {
+                message += `- ${c}\n`;
+            });
+            message += `\n`;
+        }
+
+        if (blocks['LOGICIELS'].length) {
+            message += `=== LOGICIELS ===\n`;
+            blocks['LOGICIELS'].forEach((l) => {
+                message += `- ${l}\n`;
+            });
+            message += `\n`;
+        }
+
+        if (blocks['LANGUES'].length) {
+            message += `=== LANGUES ===\n`;
+            blocks['LANGUES'].forEach((l) => {
+                message += `- ${l}\n`;
+            });
+            message += `\n`;
+        }
+
+        if (blocks['EXPÉRIENCES PROFESSIONNELLES'].length) {
+            message += `=== EXPÉRIENCES PROFESSIONNELLES ===\n`;
+            blocks['EXPÉRIENCES PROFESSIONNELLES'].forEach((exp, idx) => {
+                message += `\nExpérience ${idx + 1}\n`;
+                if (exp.dates) message += `Période : ${exp.dates}\n`;
+                if (exp.entreprises) message += `Structure : ${exp.entreprises}\n`;
+                if (exp.postes) message += `Poste : ${exp.postes}\n`;
+                if (exp.taches) message += `Tâches :\n${exp.taches}\n`;
+            });
+            message += `\n`;
+        }
+
+        if (blocks['FORMATIONS'].length) {
+            message += `=== FORMATIONS ===\n`;
+            blocks['FORMATIONS'].forEach((f, idx) => {
+                message += `\nFormation ${idx + 1}\n`;
+                if (f.diplomes) message += `Diplôme : ${f.diplomes}\n`;
+                if (f.series) message += `Filière/Série : ${f.series}\n`;
+                if (f.dates) message += `Date/Lieu : ${f.dates}\n`;
+                if (f.etablissements) message += `Établissement : ${f.etablissements}\n`;
+            });
+            message += `\n`;
+        }
+
+        if (Object.keys(blocks['AUTRES']).length) {
+            message += `=== AUTRES INFORMATIONS ===\n`;
+            for (const [k, v] of Object.entries(blocks['AUTRES'])) {
+                let label = k.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                message += `- ${label} : ${v}\n`;
+            }
+            message += `\n`;
+        }
+
+        document.getElementById('formatted-message').value = message.trim();
+        form.submit();
+    });
+});
+</script>
 </html>
