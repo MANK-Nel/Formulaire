@@ -126,6 +126,31 @@
             background: linear-gradient(90deg, #076301, #e64a00);
         }
 
+        #form-message {
+            margin-top: 18px;
+            font-size: clamp(15px, 2vw, 18px);
+            font-weight: 600;
+            text-align: center;
+            padding: 12px 8px;
+            border-radius: 8px;
+            transition: background 0.3s, color 0.3s;
+        }
+        #form-message.success {
+            background: #e6fbe6;
+            color: #094102;
+            border: 1px solid #0A7303;
+        }
+        #form-message.error {
+            background: #ffeaea;
+            color: #d94c00;
+            border: 1px solid #ff5700;
+        }
+        #form-message.sending {
+            background: #fffbe6;
+            color: #ff8a00;
+            border: 1px solid #ff8a00;
+        }
+
         .add-button {
             display: inline-block;
             margin: 10px 0;
@@ -280,6 +305,8 @@
                 width: 100%; /* S'assure que les champs ne dépassent pas */
                 max-width: 100%; /* Empêche tout dépassement */
                 box-sizing: border-box; /* Inclut padding et bordure dans la largeur */
+                font-size: 1rem;
+                min-height: 40px;
             }
 
             .section-title {
@@ -288,6 +315,12 @@
 
             label {
                 font-size: 12px;
+                margin-bottom: 8px;
+                display: block;
+            }
+            #form-message {
+                font-size: 1rem;
+                padding: 10px 4px;
             }
         }
 
@@ -335,12 +368,12 @@
             <img src="public/Business-Facebook-Cover-05.jpg" alt="Formulaire Illustration" class="responsive-image">
         </div>
         <h1>Remplissez ce formulaire pour obtenir votre CV professionnel</h1>
-        
-        <button onclick="openGuide()" class="guide-button">Guide de remplissage du CV</button>
+        <!-- Espace réservé pour le guide, volontairement vide -->
+        <div style="height:32px;"></div>
 
         <form action="https://formspree.io/f/mrbgraoo" method="POST" id="mainForm">
             <!-- Informations personnelles -->
-            <div class="section">
+            <div class="section" style="margin-bottom:32px;">
                 <div class="section-title">INFORMATIONS PERSONNELLES</div>
                 <div class="section-help">Cette section contient vos informations de contact essentielles.</div>
                 
@@ -405,33 +438,24 @@
             <div class="section">
                 <div class="section-title">COMPETENCES</div>
                 <div class="section-help">Listez vos compétences en précisant votre niveau de maîtrise.</div>
-                
                 <div id="competenceFields">
-                    <div class="competence-category" id="languesFields">
+                    <div class="competence-category" id="languesFields" style="margin-bottom:24px;">
                         <label>
                             Langues
-                            <span class="help-icon">?</span>
-                            <span class="help-tooltip">Précisez votre niveau : débutant, intermédiaire, avancé, ou courant.</span>
                             <input type="text" name="langues[]" placeholder="Ex : Français (courant)">
                         </label>
                         <a class="add-button" onclick="addLangue()">+ Ajouter une langue</a>
                     </div>
-                    
-                    <div class="competence-category" id="competencesInformatiqueFields">
+                    <div class="competence-category" id="competencesInformatiqueFields" style="margin-bottom:24px;">
                         <label>
                             Compétences Informatiques
-                            <span class="help-icon">?</span>
-                            <span class="help-tooltip">Mentionnez les logiciels que vous maîtrisez et votre niveau.</span>
                             <input type="text" name="competences_informatiques[]" placeholder="Ex : Word (avancé)">
                         </label>
                         <a class="add-button" onclick="addLogiciel()">+ Ajouter un logiciel</a>
                     </div>
-            
-                    <div class="competence-category" id="Domaines de CompétencesFields">
+                    <div class="competence-category" id="Domaines de CompétencesFields" style="margin-bottom:24px;">
                         <label>
                             Domaines de Compétences
-                            <span class="help-icon">?</span>
-                            <span class="help-tooltip">Listez vos compétences professionnelles principales.</span>
                             <input type="text" name="Domaines de Compétences[]" placeholder="Ex : Gestion de projet (intermédiaire)">
                         </label>
                         <a class="add-button" onclick="addProfessionnelle()">+ Ajouter un domaine de Compétence</a>
@@ -440,12 +464,12 @@
             </div>
 
             <!-- Expériences Professionnelles -->
-            <div class="section">
+            <div class="section" style="margin-bottom:32px;">
                 <div class="section-title">EXPERIENCES PROFESSIONNELLES</div>
                 <div class="section-help">Détaillez vos expériences professionnelles de la plus récente à la plus ancienne.</div>
                 
                 <div id="experienceFields">
-                    <div class="experience-group">
+                    <div class="experience-group" style="margin-bottom:24px;">
                         <h4>Expérience Professionnelle 1</h4>
                         <label>
                             Date de début et fin de contrat
@@ -472,34 +496,32 @@
                             <input type="text" name="experience_1_entreprises" placeholder="Ex : Airtel Gabon, Libreville">
                         </label>
                     </div>
-                    <a class="add-button" onclick="addExperience()">+ Ajouter une expérience</a>
+                    <div style="display:flex;justify-content:flex-start;margin-bottom:24px;">
+                        <a class="add-button" onclick="addExperience()">+ Ajouter une expérience</a>
+                    </div>
                 </div>
                 
                 <div id="formationFields">
-                    <div class="formation-group">
+                    <!-- Titre et aide Formation -->
+                    <div class="section-title" style="margin-bottom:0;">FORMATION</div>
+                    <div style="height:2px;background:#ff5700;width:100%;margin-bottom:8px;"></div>
+                    <div class="section-help" style="margin-bottom:18px;">Indiquez vos diplômes et formations, de la plus récente à la plus ancienne.</div>
+                    <div class="formation-group" style="margin-bottom:24px;">
                         <h4>Formation 1</h4>
                         <label>
                             Nom du diplôme ou formation
-                            <span class="help-icon">?</span>
-                            <span class="help-tooltip">Indiquez le nom complet du diplôme</span>
                             <input type="text" name="formation_1_diplomes" placeholder="Ex : Baccalauréat série B">
                         </label>
                         <label>
                             Filière / Série
-                            <span class="help-icon">?</span>
-                            <span class="help-tooltip">Précisez votre spécialisation</span>
                             <input type="text" name="formation_1_series" placeholder="Ex : Série B">
                         </label>
                         <label>
                             Date et lieu
-                            <span class="help-icon">?</span>
-                            <span class="help-tooltip">Année d'obtention et ville</span>
                             <input type="text" name="formation_1_dates" placeholder="Ex : 2020 - Libreville">
                         </label>
                         <label>
                             Nom de l'établissement
-                            <span class="help-icon">?</span>
-                            <span class="help-tooltip">Nom complet de l'établissement</span>
                             <input type="text" name="formation_1_etablissements" placeholder="Ex : Lycée National">
                         </label>
                     </div>
@@ -508,76 +530,33 @@
             </div>
                 
             <!-- Centres d'intérêt -->
-            <div class="section">
+            <div class="section" style="margin-bottom:32px;">
                 <div class="section-title">CENTRES D'INTERÊTS</div>
                 <div class="section-help">Mentionnez vos activités extra-professionnelles pertinentes.</div>
                 <label>
-                    <span class="help-icon">?</span>
-                    <span class="help-tooltip">Listez vos hobbies et activités qui montrent votre personnalité</span>
                     <textarea name="centres_interet" rows="3" placeholder="Ex : • Sport : Football en club&#10;• Culture : Lecture, théâtre&#10;• Bénévolat : Association caritative"></textarea>
                 </label>
             </div>
 
             <!-- Informations complémentaires -->
-            <div class="section">
+            <div class="section" style="margin-bottom:32px;">
                 <div class="section-title">INFORMATIONS COMPLEMENTAIRES</div>
                 <div class="section-help">Ajoutez toute information pertinente non mentionnée ailleurs.</div>
                 <label>
-                    <span class="help-icon">?</span>
-                    <span class="help-tooltip">Ex : permis de conduire, disponibilité, mobilité</span>
                     <textarea name="Informations complémentaires" rows="3" placeholder="Ex : • Permis B&#10;• Disponibilité immédiate&#10;• Mobile sur Libreville"></textarea>
                 </label>
             </div>
 
+            <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:18px;">
+                <button type="button" id="resetFormBtn" style="background:#fff; color:#d94c00; border:2px solid #d94c00; border-radius:8px; padding:10px 24px; font-weight:600; cursor:pointer;">Réinitialiser le formulaire</button>
+            </div>
+            <div id="form-message"></div>
             <button type="submit">Valider et envoyer</button>
         </form>
     </div>
 
     <!-- Modal Guide -->
-    <div id="guideModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeGuide()">&times;</span>
-            <h2>Guide de remplissage du CV</h2>
-            <div class="guide-section">
-                <h3>Comment remplir chaque section ?</h3>
-                <h4>1. Informations Personnelles</h4>
-                <ul>
-                    <li>Utilisez une adresse email professionnelle</li>
-                    <li>Vérifiez que votre numéro de téléphone est correct</li>
-                    <li>Soyez précis dans votre adresse</li>
-                </ul>
-
-                <h4>2. Compétences</h4>
-                <ul>
-                    <li>Indiquez votre niveau pour chaque compétence</li>
-                    <li>Soyez honnête dans l'évaluation de vos compétences</li>
-                    <li>Utilisez des mots-clés pertinents pour votre secteur</li>
-                </ul>
-
-                <h4>3. Expériences Professionnelles</h4>
-                <ul>
-                    <li>Commencez par l'expérience la plus récente</li>
-                    <li>Utilisez des verbes d'action pour décrire vos tâches</li>
-                    <li>Quantifiez vos réalisations quand possible</li>
-                    <li>Soyez précis dans les dates</li>
-                </ul>
-
-                <h4>4. Formation</h4>
-                <ul>
-                    <li>Mentionnez vos diplômes les plus pertinents</li>
-                    <li>Incluez les formations professionnelles importantes</li>
-                    <li>Précisez les spécialisations pertinentes</li>
-                </ul>
-
-                <h4>5. Centres d'Intérêts</h4>
-                <ul>
-                    <li>Choisissez des activités qui montrent des qualités professionnelles</li>
-                    <li>Mentionnez les activités associatives pertinentes</li>
-                    <li>Restez concis et pertinent</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <!-- Guide supprimé, espace réservé -->
 
     <script>
         // Ajout automatique du niveau d'urgence si présent dans localStorage
@@ -708,94 +687,103 @@
             }
         }
 
-        // Ajout du message structuré pour le formulaire principal
-const mainForm = document.getElementById('mainForm');
-if (mainForm) {
-    mainForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        // Construction dynamique du template HTML lisible
-        // Boucle sur toutes les formations
-        let formationsHtml = '';
-        let formationIndex = 1;
-        while(formData.get(`formation_${formationIndex}_diplomes`)) {
-            formationsHtml += `<tr><td>${formData.get(`formation_${formationIndex}_diplomes`)||''}</td><td>${formData.get(`formation_${formationIndex}_series`)||''}</td><td>${formData.get(`formation_${formationIndex}_dates`)||''}</td><td>${formData.get(`formation_${formationIndex}_etablissements`)||''}</td></tr>`;
-            formationIndex++;
+        // --- SAUVEGARDE AUTOMATIQUE & RESTAURATION ---
+        function saveFormToLocalStorage(form) {
+            const data = {};
+            Array.from(form.elements).forEach(el => {
+                if (!el.name) return;
+                if (el.type === 'checkbox' || el.type === 'radio') {
+                    data[el.name] = el.checked;
+                } else if (el.type === 'select-multiple') {
+                    data[el.name] = Array.from(el.selectedOptions).map(opt => opt.value);
+                } else {
+                    data[el.name] = el.value;
+                }
+            });
+            localStorage.setItem('formulaireCV', JSON.stringify(data));
         }
-        // Boucle sur toutes les expériences
-        let experiencesHtml = '';
-        let experienceIndex = 1;
-        while(formData.get(`experience_${experienceIndex}_postes`)) {
-            experiencesHtml += `<div style="margin-bottom:16px;"><p><b>Poste :</b> ${formData.get(`experience_${experienceIndex}_postes`)||''}</p><p><b>Entreprise :</b> ${formData.get(`experience_${experienceIndex}_entreprises`)||''}</p><p><b>Dates :</b> ${formData.get(`experience_${experienceIndex}_dates`)||''}</p><ul>${(formData.get(`experience_${experienceIndex}_taches`)||'').split('\n').map(t=>t?`<li>${t}</li>`:'').join('')}</ul></div>`;
-            experienceIndex++;
+
+        function restoreFormFromLocalStorage(form) {
+            const data = JSON.parse(localStorage.getItem('formulaireCV') || '{}');
+            Array.from(form.elements).forEach(el => {
+                if (!el.name || !(el.name in data)) return;
+                if (el.type === 'checkbox' || el.type === 'radio') {
+                    el.checked = !!data[el.name];
+                } else if (el.type === 'select-multiple') {
+                    Array.from(el.options).forEach(opt => {
+                        opt.selected = (data[el.name] || []).includes(opt.value);
+                    });
+                } else {
+                    el.value = data[el.name];
+                }
+            });
         }
-        // Boucle sur toutes les compétences informatiques
-        const competencesInformatiques = formData.getAll('competences_informatiques[]').join(', ');
-        // Boucle sur tous les domaines de compétences
-        const domainesCompetences = formData.getAll('Domaines de Compétences[]').join(', ');
-        // Boucle sur toutes les spécialisations
-        const competencesProfessionnelles = formData.getAll('competences_professionnelles[]').join(', ');
-        // Boucle sur toutes les langues
-        const langues = formData.getAll('langues[]').join(', ');
-        // Construction du message HTML final
-        const messageStructure = `
-<!DOCTYPE html>
-<html lang="fr">
-<head><meta charset="UTF-8"><title>Candidature reçue</title></head>
-<body style="font-family:'Poppins',Arial,sans-serif;color:#222;background:#fff;">
-  <div style="background:linear-gradient(90deg,#094102,#FF8A00);color:#fff;padding:16px;border-radius:8px;margin-bottom:24px;">
-    <h2>CANDIDATURE REÇUE – Profil ${formData.get('profil_utilisateur')||'Débutant/Expert'}</h2>
-  </div>
-  <div style="margin-bottom:24px;">
-    <h3>🧍‍♀️ Informations personnelles</h3>
-    <p><b>Nom & Prénom :</b> ${formData.get('nom_prenom')||''}</p>
-    <p><b>Email :</b> ${formData.get('email')||''}</p>
-    <p><b>Téléphone :</b> ${formData.get('telephone')||''}</p>
-    <p><b>Adresse :</b> ${formData.get('adresse')||''}</p>
-    <p><b>N° ONE / PNPE :</b> ${formData.get('N°ONE / PNPE')||''}</p>
-    <p><b>Permis & Mobilité :</b> ${formData.get('Informations complémentaires')||''}</p>
-  </div>
-  <div style="margin-bottom:24px;">
-    <h3>🎯 Poste Recherché & Objectif</h3>
-    <p><b>Poste visé :</b> ${formData.get('Poste recherché / Occupé')||''}</p>
-    <p><b>Objectif professionnel :</b></p>
-    <blockquote>${formData.get('objectifs')||''}</blockquote>
-  </div>
-  <div style="margin-bottom:24px;">
-    <h3>📚 Formation</h3>
-    <table style="border-collapse:collapse;width:100%;margin-bottom:16px;">
-      <thead><tr><th>Diplôme</th><th>Spécialité</th><th>Année/Lieu</th><th>Établissement</th></tr></thead>
-      <tbody>
-        ${formationsHtml}
-      </tbody>
-    </table>
-  </div>
-  <div style="margin-bottom:24px;">
-    <h3>💼 Expériences Professionnelles</h3>
-    ${experiencesHtml}
-  </div>
-  <div style="margin-bottom:24px;">
-    <h3>🧠 Compétences</h3>
-    <p><b>Informatique :</b> ${competencesInformatiques}</p>
-    <p><b>Professionnelles :</b> ${domainesCompetences}</p>
-    <p><b>Spécialisations :</b> ${competencesProfessionnelles}</p>
-    <p><b>Langues :</b> ${langues}</p>
-  </div>
-  <div style="margin-bottom:24px;">
-    <h3>❤️ Centres d’intérêt</h3>
-    <p>${formData.get('centres_interet')||''}</p>
-  </div>
-  <div style="margin-bottom:24px;">
-    <h3>⏱️ Niveau d’urgence</h3>
-    <p><b>Urgence choisie :</b> ${formData.get('niveau_urgence')||''}</p>
-  </div>
-  <div style="margin-bottom:24px;">
-    <h3>🔢 Modèle choisi</h3>
-    <p><b>Numéro de modèle :</b> ${formData.get('N° du modèle de CV & la formule')||''}</p>
-    <p><b>Formule choisie :</b> ${formData.get('N° du modèle de CV & la formule')||''}</p>
-  </div>
-</body>
-</html>
-        `;
+
+        function clearFormAndLocalStorage(form) {
+            Array.from(form.elements).forEach(el => {
+                if (!el.name) return;
+                if (el.type === 'checkbox' || el.type === 'radio') {
+                    el.checked = false;
+                } else {
+                    el.value = '';
+                }
+            });
+            localStorage.removeItem('formulaireCV');
+            const msg = document.getElementById('form-message');
+            if (msg) msg.textContent = '';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('mainForm');
+            if (!form) return;
+            restoreFormFromLocalStorage(form);
+            form.addEventListener('input', function(e) {
+                saveFormToLocalStorage(form);
+            });
+            document.getElementById('resetFormBtn').addEventListener('click', function() {
+                clearFormAndLocalStorage(form);
+            });
+        });
+
+        // --- ENVOI DU FORMULAIRE & MESSAGES ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('mainForm');
+            const btn = form.querySelector('button[type="submit"]');
+            const msg = document.getElementById('form-message');
+            if (!form || !btn || !msg) return;
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                msg.textContent = '🔄 Envoi en cours…';
+                msg.className = 'sending';
+                btn.disabled = true;
+                const formData = new FormData(form);
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        msg.textContent = '✅ Formulaire envoyé avec succès';
+                        msg.className = 'success';
+                        clearFormAndLocalStorage(form);
+                    } else {
+                        return response.json().then(data => {
+                            throw new Error(data.error || 'Erreur inconnue');
+                        });
+                    }
+                })
+                .catch(() => {
+                    msg.textContent = '❌ Échec de l’envoi, veuillez réessayer';
+                    msg.className = 'error';
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                });
+            });
+        });
+        // --- FIN ENVOI & MESSAGES ---
     </script>
 </html>
